@@ -1,2 +1,2 @@
-newmake: main.c
-	gcc -o newmake main.c
+run: main.c
+	gcc -o run main.c
