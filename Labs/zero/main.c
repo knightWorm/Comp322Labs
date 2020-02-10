@@ -113,4 +113,3 @@ if(product == 0){
 	return 1;//odd
 }
 }// end of class
-// fuck
