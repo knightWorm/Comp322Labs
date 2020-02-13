@@ -11,9 +11,10 @@
 /* Global vars*/
 FILE * in_file;
 char data[8];
-char NSInput[256];
 char file_name[256];// assuming the file name will not be longer than 25 characters.
 
+void stdin_work(char * fname);
+void display_chart();
 int OE(char * incoming);
 char DecToAscii(int num);
 int binaryToInt(char * incoming);
@@ -25,18 +26,27 @@ int main(){
 	int input_result;// will act as checkpoints for my program; key: 1 is file, 0 is data. 2 continue checking
 	printf("Enter Data or File name: ");
 	scanf("%[^\n]s",file_name); // this allows to read spaces
-	printf("Original\tASCII\tDecimal\tParity\n");
-	printf("--------\t------\t------\t------\n");
     input_result = isFile(file_name);
     if(input_result == 1){
+    	display_chart();
 		FileWork(file_name);
     }else{
     	// it must be data from terminal treat it as such.
-    	//testing
-		printf("not a file"); 
+    	display_chart();
+    	stdin_work(file_name);
+		printf("\nnot a file"); 
     }
 	return 0;
 } // end of main class
+void stdin_work(char * fname){
+	for(int i = 0; i < sizeof(fname);i++){
+	printf("%c",fname[i]);	
+	}
+}//end of class
+void display_chart(){
+	printf("Original\tASCII\tDecimal\tParity\n");
+	printf("--------\t------\t------\t------\n");
+}//end of class
 // this class will check is the input is a file name.
 int isFile(char * fname){
 	in_file = fopen(fname,"r");
@@ -59,15 +69,17 @@ void FileWork(char * fname){
 		}
 		bytes_read = read(fd,data,8);
 	while(bytes_read != 0){
+		int count = 0;
 		if(bytes_read != 8){
 			int i=0,j=0;
-			// fill the cAee with 0's to the right
-			for(i;i < (8-bytes_read);i++){
-				cArr[i]='0';
-				j++;
-			}
-			for(j;j<bytes_read;j++){
-				cArr[j] = data[j-i];
+			// fill the cArr with 0's to the right
+			for(i;i < 8;i++){
+				if(i <(8-bytes_read)){
+					cArr[i] ='0';
+					count++;
+				}else{
+				cArr[i] = data[i - count];	
+				}
 			}
 			display(cArr);
 		}else{
@@ -88,7 +100,7 @@ void display(char *incoming){
 	for(int i =0;i<sizeof(data);i++){
 		printf("%c",incoming[i]);
 	}
-	printf(" ");
+	//printf(" ");
 	decimal = binaryToInt(incoming);
 	ascii = DecToAscii(decimal);
 	odd_even = OE(incoming);
@@ -127,4 +139,3 @@ if(product == 0){
 	return 1;//odd
 }
 }// end of class
-//fuck
