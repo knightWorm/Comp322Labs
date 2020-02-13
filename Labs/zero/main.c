@@ -50,6 +50,7 @@ int isFile(char * fname){
 void FileWork(char * fname){
 	size_t nbytes;
 	ssize_t bytes_read;
+	char cArr[8];
 	int index = 0;
 	int fd = open(fname, O_RDONLY, 0666);
 	if(fd == -1){
@@ -58,7 +59,20 @@ void FileWork(char * fname){
 		}
 		bytes_read = read(fd,data,8);
 	while(bytes_read != 0){
-		display(data);
+		if(bytes_read != 8){
+			int i=0,j=0;
+			// fill the cAee with 0's to the right
+			for(i;i < (8-bytes_read);i++){
+				cArr[i]='0';
+				j++;
+			}
+			for(j;j<bytes_read;j++){
+				cArr[j] = data[j-i];
+			}
+			display(cArr);
+		}else{
+			display(data);
+		}
 		// skip the space
 		bytes_read=read(fd,data,1);
 		//read the next 8
