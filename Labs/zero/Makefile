@@ -1,2 +1,2 @@
-run: main.c
-	gcc -o run main.c
+lab0: lab0.c
+	gcc -o run lab0.c
