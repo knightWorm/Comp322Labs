@@ -8,79 +8,108 @@
 #include <fcntl.h>
 #include <math.h>
 
-FILE * in_file;
-char file_data[25];
-char data[8];
-
-void FileWork(char * fname);
-void display_chart();
+void fileWork(char * fname);
+void displayChart();
 int binaryToInt(char * incoming);
-int OE(char * incoming);
+int OE(int size, char * incoming);
 char DecToAscii(int num);
-void display(char *incoming);
 int isFile(char* fname);
 int validInput(int num,char* e[]);
-int main(int num, char* args[]){
-int isValid; //valid input: 1,2,3,4 invalid: 0, file: 3(thi is also valid)
-isValid = validInput(num,args);
-int i =0; // for he for loop
-if(isValid == 1){
-	i=1;
-	display_chart();
-	for(i; i < num; i++){
-		display(args[i]);
+void display(int size, char *incoming);
+
+
+int main(int num, char* args[])
+{
+	int decimal;
+	int odd_even;// 0 == even, 1 == odd
+	char ascii;
+	int binary;
+	
+	// validInput checks type of input and returns what starting index of binary values 
+	int start = validInput(num,args);
+	
+	if (start == 0 || num == 1) {
+		printf("\nInvalid Input. Must pass in binary split by spaces or a file containing binary.\n");
+		exit(1);
 	}
-	}else if(isValid ==2){
-	i=2;
-	display_chart();
-	for(i; i < num; i++){
-		display(args[i]);
-	}	
-	}else if(isValid == 3){
-		display_chart();
-		FileWork(args[2]);
-	}else if(isValid == 4){
-		printf("************* 4 ********\n");
-		display_chart();
-		FileWork(args[1]);
-	}else{
-		printf("\nInvalid Input\n");
+
+	// print columns
+	displayChart();
+
+	// if isValid is 1 or 2 then that means input not a file
+	if(start == 1 || start == 2){
+
+		for(int i = start; i < num; i++){
+			// convert binary to int, Ascii and checks if odd or even
+			// TODO: check if you need to pad 0's to binary
+			decimal = binaryToInt(args[i]);
+			ascii = DecToAscii(decimal);
+			odd_even = OE(8, args[i]);	 
+			
+			printf("%s",args[i]);
+			printf("\t%c\t%d\t",ascii,decimal);
+			switch(odd_even){
+				case 1: 
+					printf("ODD\n");
+					break;
+				case 0: 
+					printf("Even\n"); 
+					break;
+				default:
+					break;
+			}
+		}
 	}
-}//end of class
-void FileWork(char * fname){
-	size_t nbytes;
-	ssize_t bytes_read;
-	char cArr[8];
-	int index = 0;
+
+	if(start == 3){
+		// process file and check 
+		fileWork(args[2]);
+	}
+
+	if(start == 4){
+		fileWork(args[1]);
+	}
+
+	return 0;
+}//main
+
+void fileWork(char * fname){
 	int fd = open(fname, O_RDONLY, 0666);
 	if(fd == -1){
-	perror("File Error\n");
-	exit(1);
-		}
-		bytes_read = read(fd,data,8);
+		perror("File Error\n");
+		exit(1);
+	}
+	
+	// read 8 bytes from fd into data
+	char data[8];
+	char cArr[8];
+	ssize_t bytes_read;
+
+	bytes_read = read(fd,data,8);	
 	while(bytes_read != 0){
 		int count = 0;
 		if(bytes_read != 8){
-			int i=0,j=0;
-			// fill the cArr with 0's to the right
-			for(i;i < 8;i++){
+			for(int i=0; i < 8; i++){
+				// fill the cArr with 0's to the right
 				if(i <(8-bytes_read)){
 					cArr[i] ='0';
 					count++;
 				}else{
-				cArr[i] = data[i - count];	
+					cArr[i] = data[i - count];	
 				}
 			}
-			display(cArr);
+			display(bytes_read, cArr);
 		}else{
-			display(data);
+			display(bytes_read, data);
 		}
+
 		// skip the space
 		bytes_read=read(fd,data,1);
 		//read the next 8
 		bytes_read=read(fd,data,8);
-}
-} // enf of class
+	}
+}//end of Fucntion
+
 int validInput(int num, char* e[]){
 	if(num == 2 && isFile(e[1])==1){
 		return 4;
@@ -93,29 +122,21 @@ int validInput(int num, char* e[]){
 	}else{
 		return 0;
 	}
-}//end of class
-int isFile(char* fname){
-	 in_file = fopen(fname,"r");
-	if(in_file == NULL){
-		return 0;
-	}else{
-		fclose(in_file); // becasue i wont be working with the file here.
-		return 1;	
-	}
-} // end of class
-void display(char* incoming){
+}//end of Fucntion
+
+void display(int size, char* incoming){
 	int decimal;
 	int odd_even;// 0 == even, 1 == odd
 	char ascii;
 	int binary;
 
-	for(int i =0;i<sizeof(data);i++){
+	for(int i =0;i< size;i++){
 		printf("%c",incoming[i]);
 	}
 	//printf(" ");
 	decimal = binaryToInt(incoming);
 	ascii = DecToAscii(decimal);
-	odd_even = OE(incoming);
+	odd_even = OE(8, incoming);
 	printf("\t%c\t%d\t",ascii,decimal);
 	switch(odd_even){
 		case 1: printf("ODD\n");break;
@@ -123,6 +144,17 @@ void display(char* incoming){
 		default:break;
 	}
 }//end of class
+
+int isFile(char* fname){
+	FILE * in_file = fopen(fname,"r");
+	if(in_file == NULL){
+		return 0;
+	}else{
+		fclose(in_file); // becasue i wont be working with the file here.
+		return 1;	
+	}
+} //end of Fucntion
+
 int binaryToInt(char * incoming){
 	double sqr;
 	int sum = 0, in = 0;
@@ -131,27 +163,31 @@ int binaryToInt(char * incoming){
 		 	in= 7 - i;
 		 	sum = sum + pow(2,in);
 		 }
-	 }
+	}
 	return sum;
-}//end of class
+}//end of Fucntion
+
 char DecToAscii(int num){
 	return (char)num;
-}//end of class
-int OE(char * incoming){
-int count =0,product;
-for(int i = 0; i < sizeof(data);i++){
-if((int)incoming[i]==49){
-	count++;
-}
-}
-product = count%2;
-if(product == 0){
-	return 0; //even
-}else{
-	return 1;//odd
-}
-}// end of class
-void display_chart(){
+}//end of Fucntion
+
+int OE(int size, char * incoming){
+	int count =0,product;
+	for(int i = 0; i < size;i++){
+		if((int)incoming[i]==49){
+			count++;
+		}
+	}
+
+	product = count%2;
+	if(product == 0){
+		return 0; //even
+	}else{
+		return 1;//odd
+	}
+}//end of Fucntion
+
+void displayChart(){
 	printf("Original\tASCII\tDecimal\tParity\n");
 	printf("--------\t------\t------\t------\n");
-}//end of class
+}//end of Fucntion
