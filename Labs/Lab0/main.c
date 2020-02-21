@@ -21,7 +21,6 @@ int binaryToInt(char * incoming);
 void display(char * incoming);
 void FileWork(char * fname);
 int isFile(char * fname);
-// main
 int main(){
 	/* Local vars*/
 	int input_result;// will act as checkpoints for my program; key: 1 is file, 0 is data. 2 continue checking
