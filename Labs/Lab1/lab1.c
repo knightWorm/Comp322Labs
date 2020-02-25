@@ -10,14 +10,24 @@ void printShit(int i);
 
 int main(int argv,char * args[]){
 	time_t start, stop; 
+	pid_t child_pid = -1;
 
 	start = time(NULL); //start the clock
 	printf("START: %ld\n",start);
 
-	if(fork() == 0){
+	child_pid = fork();
+
+	// getppid() returns parent PID,
+	// getpid() retrurns child PID
+	if(child_pid == 0){
 		printf("\nI am Child!\n");
+		printf("\nChild ID: %d\n", getpid());
 	}else{
-		printf("\nI am  parent!\n");
+		int status; 
+		waitpid(child_pid,&status, 0);
+		printf("\nI am parent!\n");
+		printf("\nParent ID: %d\n", getpid());
+		printf("RETVAL: %d\n", status);
 	}
 
 	stop = time(NULL);
