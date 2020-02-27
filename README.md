@@ -36,3 +36,24 @@ $ run - data.txt
  - i also had to learn to use git from the command line. 
  ## Summary: 
 - the code work almost 100% however, i did not have enough time to pad zero to the right when the data is given  through stdin. but it does work when it comes from a file. 
+
+## Lab 1
+to build on unix(ubunto)
+### Building
+```
+$ cd comp322Labs/Labs/lab1
+$make
+```
+### Run
+```
+$cd /Comp322Labs/Labs/Lab1
+$ ./time-4-baby-and-me
+```
+## Log:
+ - when I was done researching the how to use fork. it turned out that windows did not recognized the fork();
+ - I managed to get the subsystem (Ubunto) which supports the fork(); function and also allows me to run theh regular make instead    mingw32-make.
+ - Then i fork bombed my laptop... that was fun!
+ - finally i was able to the subprocesss running and working as they are supposed to. 
+ - the program prints the right information as far as childPId and parent pid are concerned. 
+## Summary:
+- currrently the system does not display the information for USER, SYS, CUSER, CSYS. 
