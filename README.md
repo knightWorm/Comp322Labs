@@ -50,6 +50,7 @@ $cd /Comp322Labs/Labs/Lab1
 $ ./time-4-baby-and-me
 ```
 ## Log:
+ - Directories have been organizd into seperates Directories for different labs.
  - when I was done researching the how to use fork. it turned out that windows did not recognized the fork();
  - I managed to get the subsystem (Ubunto) which supports the fork(); function and also allows me to run theh regular make instead    mingw32-make.
  - Then i fork bombed my laptop... that was fun!
