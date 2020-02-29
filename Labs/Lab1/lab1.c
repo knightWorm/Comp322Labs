@@ -7,7 +7,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-void childParentProcessing(int* processStatus, pid_t * pId);
+void childParentProcessing(int processStatus, pid_t pId);
 
 int main(int argv,char * args[]){
 	time_t start, stop; 
@@ -41,14 +41,14 @@ int main(int argv,char * args[]){
 	if(currentProcessID == 0){
 		//printf("I am Child!\n");
 
-		childParentProcessing(NULL,NULL);
+		childParentProcessing(0,0);
 
 	}else{
 		//printf("I am parent!\n");
 
 		waitpid(currentProcessID,&status, 0);
 
-		childParentProcessing(&status,&currentProcessID);
+		childParentProcessing(status,currentProcessID);
 
 		sinceStart = times(&buf);
 		printf("USER: %ld, SYS: %ld\nCUSER: %ld, CSYS: %ld\n",buf.tms_utime,buf.tms_stime,buf.tms_cutime, buf.tms_cstime);
@@ -63,18 +63,18 @@ int main(int argv,char * args[]){
 }//main
 
 // Function manages the different process and displays their results.
-void childParentProcessing(int* processStatus, pid_t* pId)
+void childParentProcessing(int processStatus, pid_t pId)
 {
-	pid_t getPId = getpid();
-	pid_t getPPId = getppid();
+	pid_t pid = getpid();
+	pid_t ppid = getppid();
 
-	if(processStatus == NULL && pId == NULL)
+	if(processStatus == 0 && pId == 0)
 	{
-		printf("PPID: %d, PID: %d\n",getPPId, getPId);
+		printf("PPID: %d, PID: %d\n",ppid, pid);
 
 	}else
 	{
-		printf("PPID: %d, PID: %d, CPID: %d, RETVAL: %u\n",getPPId, getPId, *pId,*processStatus);
+		printf("PPID: %d, PID: %d, CPID: %d, RETVAL: %d\n",ppid, pid, pId,processStatus);
 	}
 }//childParentProcessing
 
