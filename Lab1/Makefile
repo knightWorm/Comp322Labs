@@ -1,5 +1,5 @@
 CFLAGS=-Wall -Wextra
 
-ron: lab1.c
-	gcc -o ron lab1.c
+time-for-baby-and-me: lab1.c
+	gcc -o time-for-baby-and-me lab1.c
  
