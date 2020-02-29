@@ -11,7 +11,7 @@ void childParentProcessing(int processStatus, pid_t pId);
 
 int main(int argv,char * args[]){
 	time_t start, stop; 
-	int status; 
+	int status =0; 
 
 	//struct tms buf, data typr: struct tms. 
 	// this has the following functions:
@@ -39,23 +39,20 @@ int main(int argv,char * args[]){
 	//if child pid  == 0 then exe code for child
 	// else child pid will be positice and exe code for parent. 
 	if(currentProcessID == 0){
-		//printf("I am Child!\n");
-
-		childParentProcessing(0,0);
+		childParentProcessing(status,currentProcessID); // instead of zeros
 
 	}else{
-		//printf("I am parent!\n");
-
 		waitpid(currentProcessID,&status, 0);
 
 		childParentProcessing(status,currentProcessID);
 
+		sleep(2);// to delay the time difference 2 seconds
+
+		// popilating the struct.
 		sinceStart = times(&buf);
 		printf("USER: %ld, SYS: %ld\nCUSER: %ld, CSYS: %ld\n",buf.tms_utime,buf.tms_stime,buf.tms_cutime, buf.tms_cstime);
 
 		//the times needs to be delayed because this sould be the last program to run.
-		sleep(2);// to delay the time difference 10 seconds
-
 		printf("STOP:  %ld\n",time(NULL));
 	}
 
@@ -63,17 +60,18 @@ int main(int argv,char * args[]){
 }//main
 
 // Function manages the different process and displays their results.
-void childParentProcessing(int processStatus, pid_t pId)
+void childParentProcessing(int processStatus, pid_t currentProcessid)
 {
 	pid_t pid = getpid();
 	pid_t ppid = getppid();
 
-	if(processStatus == 0 && pId == 0)
-	{
+	if(processStatus == 0 && currentProcessid == 0)
+	{	
 		printf("PPID: %d, PID: %d\n",ppid, pid);
 
 	}else
 	{
-		printf("PPID: %d, PID: %d, CPID: %d, RETVAL: %d\n",ppid, pid, pId,processStatus);
+		
+		printf("PPID: %u, PID: %u, CPID: %d, RETVAL: %d\n",ppid, pid, currentProcessid,processStatus);
 	}
 }//childParentProcessing
