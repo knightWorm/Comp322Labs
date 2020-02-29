@@ -54,7 +54,7 @@ int main(int argv,char * args[]){
 		printf("USER: %ld, SYS: %ld\nCUSER: %ld, CSYS: %ld\n",buf.tms_utime,buf.tms_stime,buf.tms_cutime, buf.tms_cstime);
 
 		//the times needs to be delayed because this sould be the last program to run.
-		sleep(5);// to delay the time difference 10 seconds
+		sleep(2);// to delay the time difference 10 seconds
 
 		printf("STOP:  %ld\n",time(NULL));
 	}
@@ -77,10 +77,3 @@ void childParentProcessing(int processStatus, pid_t pId)
 		printf("PPID: %d, PID: %d, CPID: %d, RETVAL: %d\n",ppid, pid, pId,processStatus);
 	}
 }//childParentProcessing
-
-/* Question to ask: 
-* is there a way to twll which memory blocked are used for child/parent procesis. 
-* how to stop a self influxed fork attack
-* is there a waty to get the time formatted to US dependencuy stds or ajsut work it put?
-*
-*/
