@@ -1,6 +1,13 @@
   
 CFLAGS=-Wall -Wextra
 
-ron: lab2.c
-	gcc -o ron lab2.c
- 
+all: launch tube clean
+.PHONY : all
+
+launch: lab2.o
+	gcc -o launch lab2.o
+
+tube: tube.o
+	gcc -o tube tube.o
+clean: 
+	rm *.o

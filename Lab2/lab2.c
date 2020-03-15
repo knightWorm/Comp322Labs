@@ -9,22 +9,12 @@
 
 void childParentProcessing(int processStatus, pid_t pId);
 
-int main(int argv,char * args[]){
-	time_t start, stop; 
-	int status =0; 
-
-	//struct tms buf, data typr: struct tms. 
-	// this has the following functions:
-	// tms_utime
-	//tms_stime
-	//tms_cutime
-	// tms_cstime
-	struct tms buf;
-
-	clock_t sinceStart;
-
-	//start = time(NULL); //start the clock
-	//printf("START: %ld\n",start);
+int main(int argv,char * args[]){ 
+	int status =0;
+	if(argv <= 1){
+		printf("Invalid input!\n"); // this is done becasue the suser might not provide the command to be operated and also gets rid of the warning on my compiler for unuse vars
+		exit(1);
+	}
 
 	//if the child id remains awith value of -1 after code line 19 
 	// then there is a problem statrting the child process... terminate the program.
@@ -39,40 +29,23 @@ int main(int argv,char * args[]){
 	//if child pid  == 0 then exe code for child
 	// else child pid will be positice and exe code for parent. 
 	if(currentProcessID == 0){
-		childParentProcessing(status,currentProcessID); // instead of zeros
-         // replace with second operation <<exe next program on queue>>
+		execve(args[1],args +1,NULL); // i wont set this to an int becasue it won't be checking for failure
+	
+		perror("Could not excute");
+		exit(1);
 
 	}else{
-		waitpid(currentProcessID,&status, 0);//change status parameter to signal the next program exec.
+	   fprintf(stderr,"%s: $$ = %d\n",args[1],currentProcessID);
 
-		childParentProcessing(status,currentProcessID);
+	   waitpid(currentProcessID,&status, 0);//change status parameter to signal the next program exec.
 
-		//sleep(2);// to delay the time difference 2 seconds
+	   if(WIFEXITED(status) != 0){
+	   		fprintf(stderr,"%s: $? = %d\n",args[1],WEXITSTATUS(status));
+	   		
+	   }
 
-		// popilating the struct.
-		sinceStart = times(&buf);
-		printf("USER: %ld, SYS: %ld\nCUSER: %ld, CSYS: %ld\n",buf.tms_utime,buf.tms_stime,buf.tms_cutime, buf.tms_cstime);
-
-		//the times needs to be delayed because this sould be the last program to run.
-		printf("STOP:  %ld\n",time(NULL));
 	}
 
 	return 0;
 }//main
 
-// Function manages the different process and displays their results.
-void childParentProcessing(int processStatus, pid_t currentProcessid)
-{
-	pid_t pid = getpid();
-	pid_t ppid = getppid();
-
-	if(processStatus == 0 && currentProcessid == 0)
-	{	
-		printf("PPID: %d, PID: %d\n",ppid, pid);
-
-	}else
-	{
-		
-		printf("PPID: %u, PID: %u, CPID: %d, RETVAL: %d\n",ppid, pid, currentProcessid,processStatus);
-	}
-}//childParentProcessing
