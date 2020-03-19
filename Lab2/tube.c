@@ -10,7 +10,7 @@
 int main(int argv,char * args[]){
 	/*Local vars*/
 	int fd[2],i=0,nextInstr =0;
-	int status,status1;
+	int status=0,status1=0;
 
 	/*status and status1 attributes
 	* these will serve as the status for the waitpid for thw two child process.*/
@@ -59,9 +59,10 @@ int main(int argv,char * args[]){
 	// also the child is repossible for executing the next set of instructuions so, dup2() will be use for the file descriptor. refer back to fd attributes.
 	// the parent will create the secodn process. 
 	if(oneChildProcess == 0){
-		fprintf(stderr,"This is the first chiild\n");
+		//fprintf(stderr,"This is the first chiild\n");
 
 		// write to the pipe
+		close(fd[0]);
 		dup2(fd[1],1);
 
 		execve(args[1],args + 1, NULL);
@@ -74,31 +75,40 @@ int main(int argv,char * args[]){
 		
 		}
 
-		if(twoChildProcess != 0){
-		 	fprintf(stderr,"%s: $$ = %d\n",args[1],oneChildProcess);
-		 	fprintf(stderr,"%s: $$ = %d\n",args[4],twoChildProcess);
-		}else{
-			fprintf(stderr,"This is the second child\n");
+		if(twoChildProcess == 0){
+		 	//fprintf(stderr,"This is the second child\n");
 
 			// read from pipe
+			close(fd[1]);
 		 	dup2(fd[0],0);
-		 	execve(args[nextInstr],args + nextInstr,NULL);
+
+		 	//execve(args[nextInstr],args + nextInstr,NULL);
+
 		 	exit(1);
+		}else{
+			fprintf(stderr,"%s: $$ = %d\n",args[1],oneChildProcess);
+		 	fprintf(stderr,"%s: $$ = %d\n",args[4],twoChildProcess);
+		    // parent must wait for the children to finish their processes. 
+	   		// waitpid(oneChildProcess,&status,0);
+	   	    waitpid(twoChildProcess,&status1,0);
+	   	     // cloing the pipes access to children
+	    	close(fd[1]);
+	    	//close(fd[0]);
+   			// print to stdderr fd[2]
+	    	fprintf(stderr, "%s: $? = %d\n",args[1],status);
+	 	   	fprintf(stderr, "%s: $? = %d\n",args[1],status1);
+
 	    }
-	      
-	      // cloing the pipes access to children
-	    close(fd[1]);
-	    close(fd[0]);
-
-	    // parent must wait for the children to finish their processes. 
-	    waitpid(oneChildProcess,&status,0);
-	    waitpid(twoChildProcess,&status1,0);
-
-	      // print to stdderr fd[2]
-	    fprintf(stderr, "%s: $? = %d\n",args[1],status);
-	    fprintf(stderr, "%s: $? = %d\n",args[1],status1);
 	     
 	}
 
 	return 0;
 }// end fo tube function
+
+/*
+
+
+
+
+
+*/
