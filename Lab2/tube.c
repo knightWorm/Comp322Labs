@@ -65,7 +65,7 @@ int main(int argv,char * args[]){
 		close(fd[0]);
 		dup2(fd[1],1);
 
-		execve(args[1],args + 1, NULL);
+		//execve(args[1],args + 1, NULL);
 	}else{
 		pid_t twoChildProcess  = fork();
 
@@ -82,7 +82,7 @@ int main(int argv,char * args[]){
 			close(fd[1]);
 		 	dup2(fd[0],0);
 
-		 	//execve(args[nextInstr],args + nextInstr,NULL);
+		 	execve(args[nextInstr],args + nextInstr,NULL);
 
 		 	exit(1);
 		}else{
