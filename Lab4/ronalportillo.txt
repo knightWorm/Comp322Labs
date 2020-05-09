@@ -1,0 +1,26 @@
+Ronal Portillo
+Email: ronal.portilloarriola.637@my.csun.edu
+ID# 109546968
+Git Repo URL:
+https://github.com/knightWorm/comp322labs.git
+
+Lab4
+
+Build:
+for Mac using subsystem Ubunto
+cd /desktop/comp322labs/lab4
+
+lab3/: make
+
+Run:
+./dining-p
+Log:
+lots of research goes went into making the program work.
+this is the only program in which i had to create a lot of helper classes. 
+the first thing that was giving me trouble was the fork 
+some some reason it always gave me a negative pid which meant that the fork failed. for an even stranger reason, it jsut worked one day 
+this is also the first time i ever used methaforms, which was fun but i to this day i am not fully sure on how to make them work properly. 
+ 
+
+Summary:
+due to work and being a full time student at two different schools, i did not have enouh time to do the second part. but he dining part does work.
