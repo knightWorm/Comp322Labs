@@ -22,6 +22,7 @@ $ ./time-4-baby-and-me
  - changed time traking system to times() and im using the data structure clocl_t to keep track of individual function time. 
  - reogaized the README.md files for the indivual labs. 
  - Updated the final commit to clean the project from all the test print statements that were used.
+ - this lines will be the only change i make forthis commit. i wanted github to show the lastest update as lab1 maintenance. 
 ## Summary:
 - currrently the system does not display the information for USER, SYS, CUSER, CSYS.
 - Everything worlk, except i am not happy for the printing of some of the variables. it returns all 0's istead of the desired values. 
