@@ -161,8 +161,9 @@ int binaryToInt(char * incoming){
 	for(int i =7; i > 0; i--){
 		 if((int)incoming[i]== 49){
 		 	in= 7 - i;
-		 	sum = sum + pow(2,in);
+		 	sum = sum + pow(2.0,in);
 		 }
+		 
 	}
 	return sum;
 }//end of Fucntion
