@@ -37,6 +37,7 @@ int main(int argv,char * args[]){
 	}else{
 	   fprintf(stderr,"%s: $$ = %d\n",args[1],currentProcessID);
 
+
 	   waitpid(currentProcessID,&status, 0);//change status parameter to signal the next program exec.
 
 	   if(WIFEXITED(status) != 0){

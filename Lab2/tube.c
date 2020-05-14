@@ -88,12 +88,15 @@ int main(int argv,char * args[]){
 		}else{
 			fprintf(stderr,"%s: $$ = %d\n",args[1],oneChildProcess);
 		 	fprintf(stderr,"%s: $$ = %d\n",args[4],twoChildProcess);
+
 		    // parent must wait for the children to finish their processes. 
 	   		// waitpid(oneChildProcess,&status,0);
 	   	    waitpid(twoChildProcess,&status1,0);
+
 	   	     // cloing the pipes access to children
 	    	close(fd[1]);
 	    	//close(fd[0]);
+	    	
    			// print to stdderr fd[2]
 	    	fprintf(stderr, "%s: $? = %d\n",args[1],status);
 	 	   	fprintf(stderr, "%s: $? = %d\n",args[1],status1);
