@@ -67,7 +67,7 @@ int main (int num, char * args[]){
 	char rightChopName[20] = "/chop";
 
 	if(phil == "1"){
-		char temp = "1";
+		char temp = '1';
 		strcat(rightChopName, temp);
 
 	}else{
