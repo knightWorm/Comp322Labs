@@ -34,5 +34,6 @@ $ run - data.txt
  - i also had to learn to use git from the command line. 
  i wanted to go back and run the code for one finla check before submission, and my pow function in the binarytoInt fuction did not work. after some research i figured out that the linker was not recognizing the function. so i had to change the Makefile to: gcc -o cat lab0.c -lm
  also i notices that the makefile did not have the right name as an output: i cahnged that from ron to cat.
+ -- added this line for new commit. 
  ## Summary: 
 - the code work almost 100% however, i did not have enough time to pad zero to the right when the data is given  through stdin. but it does work when it comes from a file. 
