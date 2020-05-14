@@ -12,7 +12,11 @@ Run:
 Log:
 super simple program.
 while i had to look at my notes for calculating the right offset and page size, no further research went into making this.
-i did it in one run so there will only be one commit on github 
-
+i did it in one run so there will only be one commit on github.
+last commit, i rant the program one more time to make sure it runs properly. however, i am not sure wheather its a must to useunsigned variables. 
+ran it with the make file this time and it seems that the make file is not working. i keept getting an error sayong that the output has the same name as the original program. but it is not. i have the target as page not lab5.c
+found the error. i did make a mistake in the makefile. i had : gcc lab5.c -lpthread -o lab5.c
+but now i change it to: gcc -o page lab5.c
+now everything works.
 Summary:
 program prints what is supposed to. in the manner that is supposed to. 
