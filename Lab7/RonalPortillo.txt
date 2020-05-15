@@ -1,0 +1,30 @@
+Ronal Portillo
+Email: ronal.portilloarriola.637@my.csun.edu
+ID# 109546968
+Git Repo URL:
+https://github.com/knightWorm/comp322labs.git
+
+Lab 7
+to be build using subsystem: Ubunto
+
+BUILD
+$ cd comp322labs/lab7
+$ make
+
+RUN
+$ ./matrix_gen
+$ ./matrix_add
+
+LOG
+- started workingon this. i stiil do not what most of the instructions mean. asd
+- had to do research on how to createa 2d matrix using.
+- i have no trouble creating the matrix and displaying in the right format. but i do have trouble printing it in that format onto the file. 
+-thus far, it does not put what i wanted to put. it putts a bunch of zero's and ones. 
+- for the first attemp i used the function right. it is giving me the same problem as before. it continues to write the numbers in a weird format. this ofc does not refer to the matrix format but it seems to be tranlating to binary. but not the corect binary for the number. 
+- bammm! got it to print the matrix elements on to the file in the right format using fprintf. 
+n- thus far for the purpose of testing, i have been enterin the elements manually using scanf.
+- now il wil swich to rand() % 100 to produce random numbers from 0 to 100.
+- i had two differnt blocks of 2 nested for loops. then i decided to elimintte one of those block to so the matrix is being populated as well as printed ontot eh file in the same nested for loops.
+
+SUMMARY:
+- so far the program does not work for the second part.

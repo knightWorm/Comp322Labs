@@ -98,13 +98,13 @@ int main(int num, char * argc[]){
         	if(chosenMole == 1 && m1 == 0){
           		m1 = fork();
           		if(m1 == 0){
-            		char *args[2] = {"Mole_1", NULL};
+            		char *args[2] = {"M1", NULL};
             		execve(path, args, NULL);
           		}
         	}else if (chosenMole == 2 && m2 == 0){
           		m2 = fork();
           		if(m2 == 0){
-            		char *args[2] = {"Mole_2", NULL};
+            		char *args[2] = {"M2", NULL};
             		execve(path, args, NULL);
           		}
         	}
@@ -142,6 +142,7 @@ int main(int num, char * argc[]){
 	} // end of main
 
 // handler function
+// adds value to my global var for signals recieved.
 void sigHandler(int sig){
 	if(sig == SIGUSR1){
     	intSignal = 1;

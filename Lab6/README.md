@@ -1,13 +1,12 @@
-  
-CFLAGS=-Wall -Wextra
+LAB 6
 
-all: spiritd moles clean
-.PHONY : all
+BUILD:
+$ cd /comp322labs/lab6
+$ make
 
-spiritd: piritd.o
-	gcc -o spiritd spiritd.o
+RUN:
+./mole
+./spiritd
 
-moles: mole.o
-	gcc -o moles mole.o
-clean: 
-	rm *.o
+LOG:
+- 
