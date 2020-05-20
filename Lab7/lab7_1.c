@@ -11,7 +11,7 @@ int main(int argc, char * argv[]){
 
 	// n  = atoi(argv[1]);
 	// testing
-	printf("Enter Size of Array\n");
+	printf("Enter Size of Array: ");
 	scanf("%d",&n);
 
 	// alocating a2d array of size n
