@@ -36,7 +36,7 @@ int main(int argc, char * argv[]){
 		nm[index] = k + scalar;
 
 		// also for testing.
-		//printf("new number for: %d + Scalar: %d = %d\n", k, scalar, nm[index]);
+		printf("new number for: %d + Scalar: %d = %d\n", k, scalar, nm[index]);
 
 		// reading a new int from file
 		fscanf(fr, "%d", &k);
@@ -60,23 +60,19 @@ int main(int argc, char * argv[]){
 void matrix_add(int * srt, int size, int scalar){
 	FILE * newMatrix = fopen("NewMatrix.txt", "w");
 
-	int mn[size][size];
+	int mn[size];
 
 	int count=0,count2=0; 
 
 
 	for(int i = 0; i < size; i++){
-		for(int j=0; j < size; j++){
 
-			//mn[i][j] = 
-
-
-			if(count == size){
+			if(count == size/4){
 				fprintf(newMatrix,"\n");
 				count=0;
 			}
 
-			fprintf(newMatrix," %d ",mn[i][j]);
+			fprintf(newMatrix," %d ",srt[i]);
 		
 
 			if(count2 == size*size -1){
@@ -87,7 +83,6 @@ void matrix_add(int * srt, int size, int scalar){
 
 			count2++;
 
-		}//end of j loop
 	}// enf of i loop
 
 

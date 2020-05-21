@@ -26,8 +26,15 @@ n- thus far for the purpose of testing, i have been enterin the elements manuall
 - i think it is becasue of teh double nested for loop which i copied from part one, for the printing format.
 - but i think that one alone is what is makoing th file print in a weird way. or not weird but the file over and over again. also that nested loop was meant for a 2d array, so that can also becausing trouble.
 - also if you dont run the ./matrix_gen first. it will casue a segmentation fault on ./matrix-add since three wont be any file to read.
+- fixed it. the problem was the double nested loop i changed that to a simple  nested loops. 
+- also after some thingkinh i realized that the matri_add function is totally uneccesary.it can all be done in one funtion. 
+but i wanted to keep the formated laid out in the doc file
 
 SUMMARY:
 the program does not work correctly but i wanted to turn something in. 
+however, the program does the following:
+./mtrix_gen created a file wich contains a random matrix of the type int. 
+then 
+./matrix_add takes that file and performs matrix multiplication and then stores that into another file
 
 
